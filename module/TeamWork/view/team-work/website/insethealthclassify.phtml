@@ -1,0 +1,45 @@
+<form id='form1'>
+  <h2>常识分类添加</h2><br/><br/><br/>
+    <h3>常识分类名：</h3><div>
+      <input type="hidden" name="id" class="id" id="id" value="<?php if(isset($this->health)&&!empty($this->health))echo $this->health['id'];?>"/>
+	  <input type="text" name="Hcname" class="Hcname" id="Hcname" value="<?php if(isset($this->health)&&!empty($this->health))echo $this->health['Hcname'];?>"/></div>
+      <p><input class="button" id="button" value="提交" /></p>
+</form>
+<script>
+$('#button').click(function() {
+	var formdata = $('#form1').serialize();
+	var url = '/TeamWork/Website/insethealthclassify';
+	$.ajax({
+		type: "post",
+		data: formdata,
+		url: url,
+		dataType: 'json',
+		beforeSend: function(XMLHttpRequest){
+			$('#button').val('正在提交...');
+			$('#button').attr('disabled', 'disabled');
+		},
+		success:function(data){
+			if(data.code == 1) {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/lookhealthclassify');
+			} else {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/insethealthclassify');
+				//$('#button').val('登录');
+				$('#button').removeAttr('disabled');
+			}
+		},
+		Error:function(xhr,desc,exceptionobj){}	
+	})
+})
+</script>
+<style>
+#NCName{
+resize: none;
+width: 500px;
+height:30px;
+max-width: 1000px;
+max-height: 1000px;
+}
+
+</style>

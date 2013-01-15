@@ -1,0 +1,33 @@
+
+<a class="button" id="add"   title="分类添加">分类添加</a>
+<a class="button" id="result"   title="新闻列表">返回</a>
+
+<table>
+	<?php if(isset($newsclassify)) : foreach($newsclassify as $k=>$v) :?>
+	<tr>
+		<td><?php echo $v['id'];?></td>
+		<td><?php echo $v['NCName'];?></td>
+		<td>
+			<!-- Icons -->
+			<a href="javascript:void(0);" title="分类编辑" class="goto" turl="/TeamWork/Website/insetnewsclassify?id=<?=$v['id']?>"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a></li>
+			<a href="javascript:void(0);" title="分类删除" class="goto" turl="/TeamWork/Website/deletenewsclassify?id=<?=$v['id']?>"><img src="/resources/images/icons/cross.png" alt="Delete" /></a></li>
+			<!--	 <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+		</td>
+</tr>
+<?php  endforeach;endif;?>
+</table>
+<script>
+$('#add').click(function() {
+	load('/TeamWork/Website/insetnewsclassify','#content');
+})
+$('#result').click(function() {
+	load('/TeamWork/Website/looknews','#content');
+})
+//菜单跳转页面
+$('.goto').click(function() {
+	$('.goto').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+</script>

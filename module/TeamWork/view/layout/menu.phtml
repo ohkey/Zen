@@ -1,0 +1,93 @@
+<a href="#"><img id="logo" src="" alt="logo" /></a>
+<div id="profile-links">
+  你好, <a href="#"><?php echo $userInfo['username']; ?></a>, 
+  你有 <a href="#messages" rel="modal"><span id="messageCount">3</span>条信息</a><br /><br />
+  <a id="logout" href="javascript:void(0);" title="退出管理系统">退出</a> |<a href="#" title="View the Site">查看网站</a>
+</div>
+<ul id="main-nav">
+  <?php foreach($this->menu as $master) : 
+  				if($master['um_pid'] == 0) continue;
+  ?>
+  <?php if($master['um_level'] == 0) : 
+  				$newurl = explode('\\', $master['um_url']);
+  ?>
+  <li>
+    <a title="<?php echo '/'.$newurl[0].'/'.$newurl[2].'/index'?>" turl="<?php echo '/'.$newurl[0].'/'.$newurl[2].'/index'?>" class="goto nav-top-item no-submenu"><?php echo $master['um_name'];?></a>
+  </li>
+  <?php elseif($master['um_level'] == 1) : ?>
+  <li>
+    <a class="nav-top-item"><?php echo $master['um_name'];?></a>
+    <ul>
+     <?php foreach($this->menu as $slaver) : ?>
+     <?php if($slaver['um_pid'] == $master['um_id'] && $slaver['um_level'] == 2) : ?>
+      <li><a href="javascript:void(0);" title="<?php echo $slaver['um_url']?>" class="goto" turl="<?php echo $slaver['um_url']?>"><?php echo $slaver['um_name'];?></a></li> 
+     <?php endif; endforeach; ?>
+	</ul>
+  </li>
+  <?php endif; ?>
+  <?php endforeach; ?>
+</ul>
+<script>
+//菜单跳转页面
+$('.goto').click(function() {
+	$('.goto').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	load(url, '#content', '');
+})
+
+$('.nav-top-item').click(function() {
+	if($(this).hasClass('current')) {
+		$(this).removeClass('current');
+	} else {
+		$('.nav-top-item').removeClass('current');
+		$(this).addClass('current');
+	}
+})
+
+//退出
+$('#logout').click(function() {
+	var turl = '/TeamWork/Login/logout';
+	$.confirm({
+		'title'	 : '注意：',
+		'message'	: '确定要退出系统吗？',
+		'buttons'	: {
+			'确定'	: {
+				'class'	: 'bt-blue',
+				'action': function(){
+					$.ajax({
+						url: turl,
+						success:function(data){
+							if(data == 1) {
+								location.href = '/TeamWork/Login/index';
+							} else {
+								$.confirm({
+									'title'	 : '已退出',
+									'message'	: '请重新登录系统',
+									'buttons'	: {
+										'确定'	: {
+											'class'	: 'bt-blue',
+											'action': function(){
+												location.href = '/TeamWork/Login/index';
+											}
+										},
+										'取消'	: {
+											'class'	: 'bt-gray',
+											'action': function(){}
+										}
+									}
+								});
+							}
+						},
+						Error:function(xhr,desc,exceptionobj){}	
+					});
+				}
+			},
+			'取消'	: {
+				'class'	: 'bt-gray',
+				'action': function(){}
+			}
+		}
+	});
+})
+</script>

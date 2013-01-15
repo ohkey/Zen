@@ -1,0 +1,76 @@
+<div class="content-box">
+  <div class="content-box-header" style="line-height:45px; padding-left:5px">
+	<h3>账号管理</h3>
+	<div class="clear"></div>
+  </div>
+  <div class="content-box-content">
+	<div class="tab-content default-tab" id="tab1">
+	  <table>
+		<thead>
+		  <tr>
+		    <th>账号名称</th>
+		    <th>分组名称</th>
+			<th>隶属分组</th>
+			<th>操作</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <?php 
+			if(!empty($this->users)) : 
+				foreach ($this->users as $k=>$users) : ?>
+		  <tr>
+			<td><?php echo $users['EndUserName']; ?></td>
+			<td><?php echo $users['rolename']; ?></td>
+			<td><a href="javascript:void(0);" title="title"><?php echo $users['isdelete'] == 0 ? $users['role'] : "无";?></a></td>
+			<td>
+			  <a class="edit" id="<?php echo $users['id']; ?>" title="修改账号信息" href="javascript:void(0);"><img src="/resources/images/icons/pencil.png" title="修改账号信息" /></a>
+			  <a class="delete" id="<?php echo $users['id']; ?>" title="删除账号" href="javascript:void(0);"><img src="/resources/images/icons/cross.png" alt="删除账号" /></a> 
+			  <!-- <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+			</td>
+		  </tr>
+		  <?php endforeach; endif;?>
+		</tbody>
+	  </table>
+    </div>
+  </div>
+</div>
+<a class="button" id="add">添加账号</a>
+<script>
+$('#add').click(function() {
+	var diag = new Dialog();
+	diag.Width = 350;
+	diag.Height = 200;
+	diag.Title = "添加账号";
+	diag.show();
+	load('/TeamWork/Rights/addaccount', '#_Container_0', '');
+})
+
+$('.edit').click(function() {
+	var id = $(this).attr('id');
+	var diag = new Dialog();
+	diag.Width = 350;
+	diag.Height = 200;
+	diag.Title = "添加账号";
+	diag.show();
+	load('/TeamWork/Rights/editaccount?id='+id, '#_Container_0', '');
+})
+
+function success(data) {
+	if(data.retcode != 0) {
+		Dialog.alert(data.message);
+     } else {
+		load('/TeamWork/Rights/account', '#content', '');
+     }
+}
+
+$('.delete').click(function() {
+	var id = $(this).attr('id');
+	Dialog.confirm('确定要删除该用户？',function(){
+		var type = "POST";
+	    var data = {id:id};
+		var url = "/TeamWork/Rights/deleteaccount";
+	    var dataType = "json";
+		ajax(type, data, url, dataType);
+	});
+})
+</script>

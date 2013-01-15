@@ -1,0 +1,135 @@
+
+<div id="choosestation">
+  <div class="pop-cont" >
+    <form id="form1">
+      <p>分组：<span id="group"><?php echo $this->group['as_group'];?></span></p>
+      <p class="P" ></p> 
+      <ul class="role" >
+      <?php
+       	  $i = 0;
+          foreach($this->allmenu as $menu) {
+         	isset($menu['checked']) ? $checked = $menu['checked'] : $checked = '';
+
+        	if($menu['um_pid'] == 0) continue;
+
+        	if($menu['um_level'] == 0) {
+				echo '<li style="border-bottom: 1px solid #FFFFFF; overflow: hidden;">';
+				echo '<p style="border-bottom: 1px solid #CCCCCC; height: 30px; line-height: 31px;">
+   						 <input name="master[]" type="checkbox" '.$checked.' value="'.$menu['um_id'].'" /><span style="padding-left:6px">'.$menu['um_name'].'</span>
+       					 </p>';
+				echo '</li>';
+       		} elseif($menu['um_level'] == 1) {
+				echo '<li style="border-bottom: 1px solid #FFFFFF; overflow: hidden;">';
+        		echo '<p id="rolep'.$i.'" class="master" style="border-bottom: 1px solid #CCCCCC; height: 30px; line-height: 31px;">
+       					   <input type="checkbox" class="menuA" name="master[]" '.$checked.' value="'.$menu['um_id'].'" />
+       					   <a onclick="switchover('.$i.')" id="toggle'.$i.'" style="padding-left:20px">'.$menu['um_name'].'</a>
+       					 </p>';
+        		echo '<div id="togglediv'.$i.'" style="display: none;border-bottom: 1px solid #CCCCCC; border-top: 1px solid #FFFFFF; overflow: hidden; padding: 5px 0 5px 20px;">';
+        		foreach($this->allmenu as $slaver) {
+					isset($slaver['checked']) ? $slaverchecked = $slaver['checked'] : $slaverchecked = '';
+        			if($slaver['um_pid'] == $menu['um_id'] && $slaver['um_level'] == 2) {
+        				echo '<p style="line-height: 29px;"><input type="checkbox" class="menuB" name="slaver[]" '.$slaverchecked.' value="'.$slaver['um_id'].'" /> '.$slaver['um_name'].'</p>';
+        				if(!empty($slaver['actions'])) {
+							echo '<div style="background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #CCCCCC;margin-bottom: 5px;padding: 5px 12px;">';
+        					foreach($slaver['actions'] as $action) {
+								isset($action['checked']) ? $actionchecked = $action['checked'] : $actionchecked = '';
+        						echo '<p style="padding-top:3px"><input class="menuC" name="actions[]" value="'.$action['id'].'" type="checkbox" '.$actionchecked.' /><span style="padding-left:6px">'.$action['name'].'</span></p>';
+        					}
+        					echo '</div>';
+        				}
+        			}
+        		}
+        		echo '</div>';
+        		echo '</li>';
+	        }
+       		$i++;
+       	}
+      ?>
+      </ul>
+      <p id="btn-save">
+        <a class="button" id="save">保　存</a>　
+        <a class="button" id="cancel">取　消</a>
+      </p>
+	</form>
+  </div>
+</div>
+<script>
+
+$('#save').click(function() {
+	var type = 'POST';
+	var formdata = $('#form1').serialize() + '&as_group='+$('#group').html() + '&as_groupid=<?php echo $groupid?>';
+	var url = '/TeamWork/Rights/savarights';
+	var datatype = 'html';
+	ajax(type, formdata, url, datatype);
+})
+
+function success(data) {
+	if(data == 1) {
+		$('#content').load('/TeamWork/Rights/privileges');
+		Dialog.close();
+	} else {
+		alert(data);
+		Dialog.close();
+		location.reload();
+	}
+}
+
+function switchover(i)
+{
+	if($("#togglediv"+i).css("display")=="none") {
+		$("#rolep"+i).removeClass("master");
+		$("#rolep"+i).addClass("close");
+		$("#togglediv"+i).show();
+	} else {
+		$("#rolep"+i).removeClass("close");
+		$("#rolep"+i).addClass("master");
+		$("#togglediv"+i).hide();
+	}
+}
+
+$('.menuA').click(function() {
+	var bchecked = this.checked;
+	$(this).parent().parent().find('input[name="slaver[]"]').attr('checked', bchecked);
+	$(this).parent().parent().find('input[name="actions[]"]').attr('checked', bchecked);
+});
+
+$('.menuB').click(function () {
+	var bchecked = this.checked;
+	$(this).parent().next().find('input[name="actions[]"]').attr('checked', bchecked);
+	if(bchecked)	{
+		$(this).parent().parent().parent().find('input[class="menuA"]').attr('checked', bchecked);
+	} else {
+		var ischecked = false;
+		$(this).parent().parent().find('input[class="menuB"]').each(function() {
+			if(this.checked) {
+				ischecked = this.checked;
+			}
+		})
+		if(!ischecked) {
+			$(this).parent().parent().parent().find('input[class="menuA"]').attr('checked', ischecked);
+		}
+	}
+});
+
+$('.menuC').click(function() {
+	var bchecked = this.checked;
+	if(bchecked)	{
+		$(this).parent().parent().prev().find('input[class="menuB"]').attr('checked', bchecked);
+	} else {
+		var actionchecked = false;
+		var i = $(this).attr('alt');
+		$(this).parent().parent().find('input[name="actions[]"]').each(function() {
+			if(this.checked) {
+				actionchecked = this.checked;
+			}
+		})
+		if(!actionchecked) {
+			$(this).parent().parent().prev().find('input[class="menuB"]').attr('checked', actionchecked);
+		}
+	}
+})
+
+$('#cancel').click(function() {
+	Dialog.close();
+})
+</script>

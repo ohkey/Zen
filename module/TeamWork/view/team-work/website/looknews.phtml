@@ -1,0 +1,103 @@
+<div class="content-box">
+	<div class="content-box-header">
+		
+		<h3>新闻内容</h3>
+
+		<div class="clear"></div>
+		
+	</div> <!-- End .content-box-header -->
+	
+	<div class="content-box-content">
+		
+		<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+
+			
+			<table>
+				
+				<thead>
+					<tr>
+					   <th><input class="check-all" type="checkbox" /></th>
+
+					   <th>新闻编号</th>
+					   <th>新闻分类</th>
+					   <th>新闻标题</th>
+					   <th>操作</th>
+
+					</tr>
+					
+				</thead>
+			 
+				<tfoot>
+					<tr>
+						<td colspan="6">
+							<div class="bulk-actions align-left">
+								<select name="dropdown">
+									<option value="option1">选择一个动作...</option>
+									<option value="option2">删除</option>
+									
+								</select>
+								<a class="button" href="#">适用于选择</a>
+							</div>
+							
+							<div class="pagination">
+								<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
+								<a href="#" class="number" title="1">1</a>
+								<a href="#" class="number" title="2">2</a>
+								<a href="#" class="number current" title="3">3</a>
+								<a href="#" class="number" title="4">4</a>
+								<a href="#" title="Next Page">下一个 &raquo;</a><a href="#" title="Last Page">最后 &raquo;</a>
+							</div> <!-- End .pagination -->
+							<div class="clear"></div>
+						</td>
+					</tr>
+				</tfoot>
+				
+				<tbody>
+				<?php 
+				if(!empty($this->news)) : 
+				foreach ($this->news as $k=>$new) : ?>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td><?php echo $new['Nid']?></td>
+						<td><a href="#" title="title"><?php echo $newsclassify[$new['NCID']];?></a></td>
+						<td>
+						<a href="javascript:void(0);" title="新闻查看" class="show" turl="/TeamWork/Website/shownews?Nid=<?=$new['Nid']?>"><?=$new['Ntitle']?></a></li>
+						<td>
+						<a href="javascript:void(0);" title="新闻编辑" class="view" turl="/TeamWork/Website/insetnews?Nid=<?=$new['Nid']?>"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a>
+						<a href="javascript:void(0);" title="新闻删除" class="delete" turl="/TeamWork/Website/deletenews?Nid=<?=$new['Nid']?>"><img src="/resources/images/icons/cross.png" alt="Delete" /></a>								
+						<!--	 <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+						</td>
+					</tr>
+					<?php endforeach; endif;?>
+				</tbody>
+							
+			</table>
+          </div>
+         <a class="button" id="add">添加新闻</a> <a class="button" id="newsclassify">分类列表</a>
+    </div>
+ </div>
+
+<script>
+//菜单跳转页面
+$('.show').click(function() {
+	$('.show').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+$('.view').click(function() {
+	$('.view').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+
+$('#add').click(function() {
+	load('/TeamWork/Website/insetnews','#content');
+})
+$('#newsclassify').click(function() {
+	load('/TeamWork/Website/looknewsclassify','#content');
+})
+
+
+</script>

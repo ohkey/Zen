@@ -1,0 +1,88 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php echo $this->Webinfo['title']; ?></title>
+	<link rel="stylesheet" href="/resources/css/reset.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/resources/css/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/resources/css/invalid.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/css/jquery.alerts.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/css/loading.css" type="text/css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/jQuery_plugin/confirm/jquery.confirm/jquery.confirm.css" />
+	<link rel="stylesheet" href="/css/groupauthority.css" type="text/css" media="screen" />
+	
+	<script type="text/javascript" src="/resources/scripts/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="/jQuery_plugin/confirm/jquery.confirm/jquery.confirm.js"></script>
+	<script type="text/javascript" src="/resources/scripts/simpla.jquery.configuration.js"></script>
+	<script type="text/javascript" src="/resources/scripts/facebox.js"></script>
+	<script type="text/javascript" src="/resources/scripts/jquery.wysiwyg.js"></script>
+	<script type="text/javascript" src="/js/jquery.alerts.js"></script>
+	<script type="text/javascript" src="/jQuery_plugin/zDialog/zDrag.js"></script>
+	<script type="text/javascript" src="/jQuery_plugin/zDialog/zDialog.js"></script>
+  </head>
+  <body>
+	<div id="body-wrapper">
+	  <div id="sidebar">
+		<div id="sidebar-wrapper">
+		  <?php echo $this->partial('/layout/menu.phtml', array('menu'=>$menu, 'userInfo'=>$userInfo))?>
+        </div>
+      </div>
+      <div id="main-content">
+        <div id="content"><?php echo $this->content;?></div>
+        <div id="footer">
+		  <small>
+			&#169; Copyright 2012 Shanghai Inlay | Powered by <a href="">Shanghai Inlay SWG</a> | <a href="#">Top</a>
+		  </small>
+		</div>
+      </div>
+    </div>
+    <div class="overlay" style="height: 1325px; display: none; opacity: 0;"></div>
+	<div id="AjaxLoading" class="showbox" style="opacity: 0; margin-top: 250px;">
+	  <div class="loadingWord">
+	    <img src="/images/waiting.gif">
+	      加载中，请稍候...
+	  </div>
+	</div>
+  </body>
+</html>
+<script>
+//全局加载方法
+function load(url, overload, data) {
+	if(typeof(url) != 'string' || typeof(overload) != 'string') {
+		alert('参数有误！');
+		location.reload();
+	}
+	var h = $(document).height();
+	$(".overlay").css({"height": h ,'display':'block'});
+	//$(".overlay").css({'display':'block','opacity':'0.4'});
+	$(".showbox").animate({'margin-top':'300px','opacity':'1'},200);
+	$(overload).load(url, data, function() {
+		$(".showbox").animate({'margin-top':'250px','opacity':'0'},400);
+		$(".overlay").css('display','none');
+		//$(".overlay").animate({'opacity':'0'}, 400);
+	});
+}
+
+//全局ajax请求
+function ajax(type, formdata, url, datatype) {
+	$.ajax({
+		type: type,
+		data: formdata,
+		url: url,
+		dataType: datatype,
+		beforeSend: function(XMLHttpRequest) {
+			var h = $(document).height();
+			$(".overlay").css({"height": h ,'display':'block'});
+			$(".showbox").animate({'margin-top':'300px','opacity':'1'},200);
+			if('beforesend' in window) beforesend(XMLHttpRequest);
+		},
+		success:function(data) {
+			$(".showbox").animate({'margin-top':'250px','opacity':'0'},400);
+			$(".overlay").css('display','none');
+			if('success' in window) success(data);
+		},
+		Error:function(xhr,desc,exceptionobj) {
+			if('error' in window) error(xhr,desc,exceptionobj);
+		}
+	});
+}
+</script>

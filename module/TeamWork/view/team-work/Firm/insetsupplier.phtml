@@ -1,0 +1,170 @@
+
+<div class="content-box">
+	<div class="content-box-header">
+		<h2>供应商基本信息添加</h2>
+	</div>  
+	<div class="content-box-content">	
+		<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+			<form id="form1">
+			<table>	
+				<tbody>
+				
+						<tr style="width:500">
+							<td><span>公司名称:	</span>
+								<input type="hidden" name="id" class="id" id="id" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['id'];?>"/>
+								<input type="text"  name="name" class="name" id="name" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['name'];?>"/>
+							</td>
+						</tr>
+						<tr style="width:500">
+							<td><span>公司地址:	</span>
+								<input type="text"  name="address" class="address" id="address" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['address'];?>"/>
+							</td>
+							<td><span>邮编:	</span>
+								<input type="text"  name="postcode" class="postcode" id="postcode" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['postcode'];?>"/>
+							</td>
+						</tr>
+						<tr style="width:500">
+							<td><span>联系电话:	</span>
+								<input type="text"  name="phone" class="phone" id="phone" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['phone'];?>"/>
+							</td>
+							<td><span>传真:	</span>
+								<input type="text"  name="fax" class="fax" id="fax" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['fax'];?>"/>
+							</td>
+						</tr>
+						<tr style="width:500">
+							<td><span>主要负责人:	</span>
+								<input type="text"  name="main_principal" class="main_principal" id="main_principal" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['main_principal'];?>"/>
+							</td>
+							<td><span>公司网站:	</span>
+								<input type="text"  name="url" class="url" id="url" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['url'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td><span>业务联系人:	</span>
+								<input type="text"  name="business_linkman" class="business_linkman" id="business_linkman" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['business_linkman'];?>"/>
+							</td>
+							<td>电子邮件:	
+								<input type="text"  name="email" class="email" id="email" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['email'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>注册资本:	
+								<input type="text"  name="retister_capital" class="retister_capital" id="retister_capital" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['retister_capital'];?>"/>
+							</td>
+							<td>占地面积:	
+								<input type="text"  name="floor_space" class="floor_space" id="floor_space" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['floor_space'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>成立日期:	
+								<input type="text"  name="established_time" class="established_time" id="established_time" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['established_time'];?>"/>
+							</td>
+							<td>营业额:	
+								<input type="text"  name="turnover" class="turnover" id="turnover" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['turnover'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>银行信用状况:	
+								<input type="text"  name="credit_rating" class="credit_rating" id="credit_rating" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['credit_rating'];?>"/>
+							</td>
+							<td>设备状况:	
+								<input type="text"  name="equipment" class="equipment" id="equipment" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['equipment'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>人力资源状况:	
+								<input type="text"  name="manpower_resource" class="manpower_resource" id="manpower_resource" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['manpower_resource'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>主要产品及服务:	
+								<input type="text"  name="main_product" class="main_product" id="main_product" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['main_product'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>主要生产设备:	
+								<input type="text"  name="main_production_equipment" class="main_production_equipment" id="main_production_equipment" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['main_production_equipment'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>主要生产工艺:	
+								<input type="text"  name="main_production_craft" class="main_production_craft" id="main_production_craft" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['main_production_craft'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>主要试验设备:	
+								<input type="text"  name="main_test_facility" class="main_test_facility" id="main_test_facility" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['main_test_facility'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>主要检测设备:	
+								<input type="text"  name="main_detection_facility" class="main_detection_facility" id="main_detection_facility" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['main_detection_facility'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>月供货能力:	
+								<input type="text"  name="month_supply" class="month_supply" id="month_supply" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['month_supply'];?>"/>
+							</td>
+							<td>正常交付周期:	
+								<input type="text"  name="delivery_cycle" class="delivery_cycle" id="delivery_cycle" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['delivery_cycle'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>客户群体:	
+								<input type="text"  name="client_group" class="client_group" id="client_group" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['client_group'];?>"/>
+							</td>
+							<td>所提供的产品占生产的比例:	
+								<input type="text"  name="proportion" class="proportion" id="proportion" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['proportion'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>结算方式:	
+								<input type="text"  name="clearing_form" class="clearing_form" id="clearing_form" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['clearing_form'];?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td>其他事项:	
+								<input type="text"  name="any_business" class="any_business" id="any_business" value="<?php if(isset($this->supplier)&&!empty($this->supplier))echo $this->supplier['any_business'];?>"/>
+							</td>
+						</tr>
+	
+				 </tbody>
+							
+			  </table>
+		   </form>
+         </div>
+      <a class="button" id="button" >提交</a> <a class="button" id="supplier" >返回列表</a>
+    </div>
+ </div>
+
+<script>
+$('#supplier').click(function() {
+	load('/TeamWork/Firm/supplier','#content');
+})
+$('#button').click(function() {
+	var formdata = $('#form1').serialize();
+	var url = '/TeamWork/Firm/insetsupplier';
+	$.ajax({
+		type: "post",
+		data: formdata,
+		url: url,
+		dataType: 'json',
+		beforeSend: function(XMLHttpRequest){
+			$('#button').val('正在提交...');
+			$('#button').attr('disabled', 'disabled');
+		},
+		success:function(data){
+			if(data.code == 1) {
+				alert(data.message);
+				$('#content').load('/TeamWork/Firm/supplier');
+			} else {
+				alert(data.message);
+				$('#content').load('/TeamWork/Firm/insetsupplier');
+				//$('#button').val('登录');
+				$('#button').removeAttr('disabled');
+			}
+		},
+		Error:function(xhr,desc,exceptionobj){}	
+	})
+})
+</script>

@@ -1,0 +1,36 @@
+<form id="form1">
+  <div>
+    <dl style="margin:20px">
+      <dd style="margin-bottom:10px">　用户名：<input type="text" name="EndUserName" value="<?php echo $info['EndUserName']; ?>" /></dd>
+      <dd>选择分组：<select name="role">
+        <?php foreach ($this->allgroup as $groups) : ?>
+        <option value="<?php echo $groups['gp_role']; ?>" <?php echo $groups['gp_role'] == $info['role'] ? 'selected' : ''; ?>><?php echo $groups['gp_name']; ?></option>
+        <?php endforeach; ?>
+        </select>
+      </dd>
+      <dd></dd>
+    </dl>
+  </div>
+</form>
+<a style="margin:20px" id="confirm" class="btconfirm">确定</a>
+<a id="cancel" class="btcancel">取消</a>
+<script>
+$('#confirm').click(function() {
+	var formdata = $('#form1').serialize();
+	formdata += '&id=<?php echo $id; ?>'
+	ajax('POST', formdata, '/TeamWork/Rights/editaccount', 'json');
+})
+
+function success(data) {
+	if(data.retcode == 0) {
+		load('/TeamWork/Rights/account', '#content', '')
+		Dialog.close();
+	} else {
+		alert(data.message);
+	}
+}
+
+$('#cancel').click(function() {
+	Dialog.close();
+})
+</script>

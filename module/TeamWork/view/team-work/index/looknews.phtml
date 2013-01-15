@@ -1,0 +1,86 @@
+			<div class="clear"></div> <!-- End .clear -->
+			<a class="button" href="/TeamWork/index/insetnews">新闻添加</a>
+			<a class="button" href="/TeamWork/index/looknewsclassify">分类列表</a>
+			<div class="content-box"><!-- Start Content Box -->
+				
+				<div class="content-box-header">
+					
+					<h3>新闻内容</h3>
+
+					
+					<div class="clear"></div>
+					
+				</div> <!-- End .content-box-header -->
+				
+				<div class="content-box-content">
+					
+					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+	
+						
+						<table>
+							
+							<thead>
+								<tr>
+								   <th><input class="check-all" type="checkbox" /></th>
+
+								   <th>新闻编号</th>
+								   <th>新闻分类</th>
+								   <th>新闻标题</th>
+								   <th>操作</th>
+
+								</tr>
+								
+							</thead>
+						 
+							<tfoot>
+								<tr>
+									<td colspan="6">
+										<div class="bulk-actions align-left">
+											<select name="dropdown">
+												<option value="option1">选择一个动作...</option>
+												<option value="option2">删除</option>
+												
+											</select>
+											<a class="button" href="#">适用于选择</a>
+										</div>
+										
+										<div class="pagination">
+											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
+											<a href="#" class="number" title="1">1</a>
+											<a href="#" class="number" title="2">2</a>
+											<a href="#" class="number current" title="3">3</a>
+											<a href="#" class="number" title="4">4</a>
+											<a href="#" title="Next Page">下一个 &raquo;</a><a href="#" title="Last Page">最后 &raquo;</a>
+										</div> <!-- End .pagination -->
+										<div class="clear"></div>
+									</td>
+								</tr>
+							</tfoot>
+							
+							<tbody>
+							<?php 
+							if(!empty($this->news)) : 
+							foreach ($this->news as $k=>$new) : ?>
+
+								
+								<tr>
+									<td><input type="checkbox" /></td>
+									<td><?=$new->Nid?></td>
+									<td><a href="#" title="title"><?php echo $newsclassify[$new->NCID];?></a></td>
+									<td><a href="../index/shownews?Nid=<?=$new->Nid?>" title="title"><?=$new->Ntitle?></a></td>
+									
+									<td>
+										<!-- Icons -->
+										 <a href="../index/insetnews?Nid=<?=$new->Nid?>" title="Edit"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a>
+										 <a href="../index/deletenews?Nid=<?=$new->Nid?>" title="Delete"><img src="/resources/images/icons/cross.png" alt="Delete" /></a> 
+									<!--	 <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+									</td>
+								</tr>
+								<?php endforeach; endif;?>
+							</tbody>
+							
+						</table>
+                </div>
+         </div>
+ </div>
+         

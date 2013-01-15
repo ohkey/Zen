@@ -1,0 +1,74 @@
+
+
+
+		
+<form id='form1'>
+  <h2>新闻添加</h2><br/><br/><br/>
+	   新闻标题：<div>
+	<input type="hidden" name="Nid" class="Nid" id="Nid" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news['Nid'];?>"/>
+	<input type="text"  style="width:500" name="Ntitle" class="Ntitle" id="Ntitle" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news['Ntitle'];?>"/></div>
+			
+	    新闻分类：
+	<select name="NCID" id="NCID">
+	<?php foreach ($this->newsclassify as $k=>$v) : ?>
+		<option value='<?=$v['id']?>' <?php if(isset($this->news)&&!empty($this->news)&&($this->news['NCID'] == $v['id'])){ECHO "selected";}?>><?=$v['NCName']?></option>			
+	<?php endforeach;?>
+	</select>
+		新闻内容：
+	<textarea rows="30" cols="50" id="Ncontent" name="Ncontent"  ><?php if(isset($this->news)&&!empty($this->news)){echo $this->news['Ncontent'];}?></textarea>
+			
+	<a class="button" id="button">提交</a>
+</form>	
+
+<script>
+//添加ckeditor编辑器；
+
+var editor ;   
+
+if(!CKEDITOR.instances.Ncontent){  //判定content2是否存在
+                             editor= CKEDITOR.replace("Ncontent");   
+                        }else{   
+                               addCkeditor("Ncontent");   
+                        }  
+function addCkeditor(id){   
+
+	var editor2 = CKEDITOR.instances[id];   
+
+	if(Ncontent) editor2.destroy(true);//销毁编辑器 content2,然后新增一个
+	                            editor = CKEDITOR.replace(id);   
+	                    }   
+
+</script>
+<script>
+$('#button').click(function() {
+	var Nid = $('#Nid').val();
+	var Ntitle = $('#Ntitle').val();
+	var NCID = $('#NCID').val();
+	var Ncontent = CKEDITOR.instances.Ncontent.getData();
+	var formdata = 'Nid='+ Nid + '&Ntitle=' + Ntitle + '&NCID=' + NCID + '&Ncontent=' + Ncontent;
+	
+	var url = '/TeamWork/Website/insetnews';
+	$.ajax({
+		type: "post",
+		data: formdata,
+		url: url,
+		dataType: 'json',
+		beforeSend: function(XMLHttpRequest){
+			$('#button').val('正在提交...');
+			$('#button').attr('disabled', 'disabled');
+		},
+		success:function(data){
+			if(data.code == 1) {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/looknews');
+			} else {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/insetnews');
+				//$('#button').val('登录');
+				//$('#button').removeAttr('disabled');
+			}
+		},
+		Error:function(xhr,desc,exceptionobj){}	
+	})
+})
+</script>

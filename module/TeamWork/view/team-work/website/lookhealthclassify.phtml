@@ -1,0 +1,33 @@
+
+<a class="button" id="add"   title="分类添加">分类添加</a>
+<a class="button" id="result"   title="常识列表">返回</a>
+
+<table>
+	<?php if(isset($healthclassify)) : foreach($healthclassify as $k=>$v) :?>
+	<tr>
+		<td><?php echo $v['id'];?></td>
+		<td><?php echo $v['Hcname'];?></td>
+		<td>
+			<!-- Icons -->
+			<a href="javascript:void(0);" title="分类编辑" class="goto" turl="/TeamWork/Website/insethealthclassify?id=<?=$v['id']?>"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a></li>
+			<a href="javascript:void(0);" title="分类删除" class="goto" turl="/TeamWork/Website/deletehealthclassify?id=<?=$v['id']?>"><img src="/resources/images/icons/cross.png" alt="Delete" /></a></li>
+			<!--	 <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+		</td>
+</tr>
+<?php  endforeach;endif;?>
+</table>
+<script>
+$('#add').click(function() {
+	load('/TeamWork/Website/insethealthclassify','#content');
+})
+$('#result').click(function() {
+	load('/TeamWork/Website/lookhealth','#content');
+})
+//菜单跳转页面
+$('.goto').click(function() {
+	$('.goto').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+</script>

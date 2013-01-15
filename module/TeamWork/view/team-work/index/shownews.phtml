@@ -1,0 +1,18 @@
+<div class="content-box-header">
+	<h3>新闻详细</h3>
+</div>				
+<div class="tab-content default-tab" id="tab1"> 
+	<div class="find_center"><h2><?php echo isset($this->news->Ntitle)?$this->news->Ntitle:''?></h2></div>
+	<br/>
+	<div class="find_center"><h3>发表于：<?php echo isset($this->news->Ntime)?$this->news->Ntime:''?></h3></div>
+	<hr />
+	<div class="find_center"><?php echo isset($this->news->Ncontent)?$this->news->Ncontent:''?></div>
+	
+</div> 
+<style>
+.find_center{
+	text-align:center;
+}
+
+</style>					
+

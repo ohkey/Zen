@@ -1,0 +1,63 @@
+<div id="login-wrapper" class="png_bg">
+  <div id="login-top">
+	<img id="logo" src="" alt="自己粘个logo吧" />
+  </div>
+  <div id="login-content-wrapper">
+  <div id="login-content">
+	<form id='form1'>
+	  <div class="notification information png_bg">
+		<div>欢迎管理员登陆系统</div>
+	  </div>
+	  <p>
+		<label>用户名：</label>
+		<input class="text-input" type="text" id="EndUserName" name="EndUserName"/>
+	  </p>
+	  <div class="clear"></div>
+	  <p>
+		<label>密　码：</label>
+		<input class="text-input" type="password" id="EndUserPwd" name="EndUserPwd" />
+	  </p>
+	  <div class="clear"></div>
+	  <!-- <p id="remember-password"><input type="checkbox" />记住我</p> -->
+	  <div class="clear"></div>
+	  <p><input class="button" id="button" value="登陆" type="button" /></p>
+	</form>
+	<span id="error" style="color: red; font-size:14px"></span>
+  </div>
+  </div>
+</div>
+<script>
+function loing()
+{
+	if($('#EndUserName').val() == "" || $('#EndUserPwd').val() == "") {
+		$('#error').html('用户名或密码不能为空');
+		return;
+	}
+	var formdata = $('#form1').serialize();
+	var url = '/TeamWork/Login/index';
+	$.ajax({
+		type: "post",
+		data: formdata,
+		url: url,
+		dataType: 'json',
+		success:function(data){
+			if(data.retcode == 1) {
+				window.location='/TeamWork/Index/index';
+			} else {
+				$('#error').html(data.message);
+			}
+		},
+		Error:function(xhr,desc,exceptionobj){}	
+	})
+}
+
+$('#form1').keydown(function(e){
+	if(e.keyCode==13){
+		loing();
+	}
+});
+
+$('#button').click(function() {
+	loing();
+})
+</script>

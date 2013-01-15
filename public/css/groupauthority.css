@@ -1,0 +1,44 @@
+.master{
+	background: url("/images/Icon.png") no-repeat scroll 20px 10px transparent;
+}
+.close{
+	background: url("/images/Icon.png") no-repeat scroll 20px -21px transparent;
+}
+
+#choosestation .pop-cont {
+	background-color: #E8ECED;
+	overflow: hidden;
+	padding: 18px 20px 15px;
+}
+
+#choosestation .P{
+	border-bottom:1px solid #fff;
+	border-top:1px solid #ccc; 
+	margin:5px 0px 2px 0px;
+}
+
+#choosestation .role{
+    height: 285px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

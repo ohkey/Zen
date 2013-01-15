@@ -1,0 +1,102 @@
+<div class="content-box">
+	<div class="content-box-header">
+		<h3>供应商</h3>
+		<div class="clear"></div>
+	</div>  
+	<div class="content-box-content">	
+		<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+			<table>	
+				<thead>
+					<tr>
+					   <th><input class="check-all" type="checkbox" /></th>
+  					   <th>公司编号</th>
+					   <th>公司名称</th>
+					   <th>注册资本</th>
+					   <th>信用状况</th>
+					   <th>主要负责人</th>
+					   <th>业务联系人</th>
+					   <th>成立时间</th>
+					   <th>电话</th>
+					   <th>操作</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan="6">
+							<div class="bulk-actions align-left">
+								<select name="dropdown">
+									<option value="option1">选择一个动作...</option>
+									<option value="option2">删除</option>
+								</select>
+								<a class="button" href="#">适用于选择</a>
+							</div>
+							
+							<div class="pagination">
+								<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
+								<a href="#" class="number" title="1">1</a>
+								<a href="#" class="number" title="2">2</a>
+								<a href="#" class="number current" title="3">3</a>
+								<a href="#" class="number" title="4">4</a>
+								<a href="#" title="Next Page">下一个 &raquo;</a><a href="#" title="Last Page">最后 &raquo;</a>
+							</div> <!-- End .pagination -->
+							<div class="clear"></div>
+						</td>
+					</tr>
+				</tfoot>
+				<tbody>
+				<?php 
+				if(!empty($this->supplier)) : 
+				foreach ($this->supplier as $k=>$supplier) : ?>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td><?php echo $supplier['id']?></td>
+						<td><a href="javascript:void(0);" turl="/TeamWork/Firm/looksupplier?id=<?=$supplier['id']?>" class="name" id="name"><?php echo $supplier['name']?></a></td>
+						<td><?php echo $supplier['retister_capital']?></td>
+						<td><?php echo $supplier['credit_rating']?></td>
+						<td><?php echo $supplier['main_principal']?></td>
+						<td><?php echo $supplier['business_linkman']?></td>
+						<td><?php echo $supplier['established_time']?></td>
+						<td><?php echo $supplier['phone']?></td>
+						<td>
+						<a href="javascript:void(0);" title="编辑" class="view" turl="/TeamWork/Firm/insetsupplier?id=<?=$supplier['id']?>"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a>
+						<a href="javascript:void(0);" title="删除" class="delete" turl="/TeamWork/Firm/deletesupplier?id=<?=$supplier['id']?>"><img src="/resources/images/icons/cross.png" alt="Delete" /></a></td>							
+					</tr>
+					<?php endforeach; endif;?>
+				</tbody>
+							
+			</table>
+          </div>
+         <a class="button" id="add">添加供应商</a> <a class="button" id="newsclassify">分类列表</a>
+    </div>
+ </div>
+
+<script>
+//菜单跳转页面
+$('.show').click(function() {
+	$('.show').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+$('.view').click(function() {
+	$('.view').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+
+$('.name').click(function() {
+	$('.name').removeClass('current');
+	$(this).addClass('current');
+	var url = $(this).attr('turl');
+	$('#content').load(url);
+})
+
+$('#add').click(function() {
+	load('/TeamWork/Firm/insetsupplier','#content');
+})
+
+$('#newsclassify').click(function() {
+	load('/TeamWork/Firm/looknewsclassify','#content');
+})
+</script>

@@ -1,0 +1,45 @@
+<form id='form1'>
+  <h2>新闻分类添加</h2><br/><br/><br/>
+    <h3>新闻分类名：</h3><div>
+      <input type="hidden" name="id" class="id" id="id" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news['id'];?>"/>
+	  <input type="text" name="NCName" class="NCName" id="NCName" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news['NCName'];?>"/></div>
+      <p><input class="button" id="button" value="提交" /></p>
+</form>
+<script>
+$('#button').click(function() {
+	var formdata = $('#form1').serialize();
+	var url = '/TeamWork/Website/insetnewsclassify';
+	$.ajax({
+		type: "post",
+		data: formdata,
+		url: url,
+		dataType: 'json',
+		beforeSend: function(XMLHttpRequest){
+			$('#button').val('正在提交...');
+			$('#button').attr('disabled', 'disabled');
+		},
+		success:function(data){
+			if(data.code == 1) {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/looknewsclassify');
+			} else {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/insetnewsclassify');
+				//$('#button').val('登录');
+				$('#button').removeAttr('disabled');
+			}
+		},
+		Error:function(xhr,desc,exceptionobj){}	
+	})
+})
+</script>
+<style>
+#NCName{
+resize: none;
+width: 500px;
+height:30px;
+max-width: 1000px;
+max-height: 1000px;
+}
+
+</style>

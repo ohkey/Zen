@@ -1,0 +1,25 @@
+<div class="content-box-header">
+	<h3>新闻详细</h3>
+</div>				
+<div class="tab-content default-tab" id="tab1"> 
+	<div class="find_center"><h2><?php echo isset($this->health['Htitle'])?$this->health['Htitle']:''?></h2></div>
+	<br/>
+	<div class="find_center"><h3>发表于：<?php echo isset($this->health['Htime'])?$this->health['Htime']:''?></h3></div>
+	<hr />
+	<div class="find_center"><?php echo isset($this->health['Hcontent'])?$this->health['Hcontent']:''?></div>
+	
+</div> 
+<div> <a class="button" id="add"> 返回</a></div>
+<style>
+.find_center{
+	text-align:center;
+}
+
+</style>	
+<script>
+
+$('#add').click(function() {
+	load('/TeamWork/Website/lookhealth','#content');
+})
+</script>				
+

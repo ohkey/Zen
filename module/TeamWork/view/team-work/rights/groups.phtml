@@ -1,0 +1,102 @@
+<div class="content-box">
+  <div class="content-box-header" style="line-height:45px; padding-left:5px">
+	<h3>分组管理</h3>
+	<div class="clear"></div>
+  </div>
+  <div class="content-box-content">
+	<div class="tab-content default-tab" id="tab1">
+	  <table>
+		<thead>
+		  <tr>
+		    <th>组</th>
+			<th>组名称</th>
+			<th>操作</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <?php 
+			if(!empty($this->allgruops)) : 
+				foreach ($this->allgruops as $k=>$groups) : 
+				 	 if($groups['gp_isdelete']) continue;
+				 	 if($groups['gp_role'] != 'administrator') :
+		  ?>
+		  <tr>
+			<td><?php echo $groups['gp_role']; ?></td>
+			<td><a href="#" title="title"><?php echo $groups['gp_name'];?></a></td>
+			<td>
+			  <a class="edit" href="javascript:void(0);" alt='<?php echo $groups['gp_id']; ?>' title="修改"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a>
+			  <a class="delete" href="javascript:void(0);" alt='<?php echo $groups['gp_id']; ?>' title="删除"><img src="/resources/images/icons/cross.png" alt="Delete" /></a> 
+			  <!-- <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+			</td>
+		  </tr>
+		  <?php else : ?>
+		  <tr>
+			<td><?php echo $groups['gp_role']; ?></td>
+			<td><a href="javascript:void(0);"><?php echo $groups['gp_name'];?></a></td>
+			<td></td>
+		  </tr>
+		  <?php endif; endforeach; else: ?>
+		  <tr><td colspan=6 style="text-align:center"><b>暂无数据</b></td></tr>
+		  <?php endif;?>
+		</tbody>
+		<?php if(!empty($this->news)) : ?>
+		<tfoot>
+		  <tr>
+			<td colspan="6">
+			  <div class="pagination">
+				<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
+				<a href="#" class="number" title="1">1</a>
+				<a href="#" class="number" title="2">2</a>
+				<a href="#" class="number current" title="3">3</a>
+				<a href="#" class="number" title="4">4</a>
+				<a href="#" title="Next Page">下一个 &raquo;</a><a href="#" title="Last Page">最后 &raquo;</a>
+			  </div> <!-- End .pagination -->
+			  <div class="clear"></div>
+			</td>
+		  </tr>
+		</tfoot>
+		<?php endif;?>
+	  </table>
+    </div>
+  </div>
+</div>
+<a class="button" id="add" title="添加自定义分组">添加组</a>
+<script>
+$('#add').click(function() {
+	var diag = new Dialog();
+	diag.Width = 400;
+	diag.Height = 180;
+	diag.Title = "添加用户组";
+	diag.show();
+	load('/TeamWork/Rights/addgroup', '#_Container_0');
+})
+
+$('.edit').click(function() {
+	var id = $(this).attr('alt');
+	var diag = new Dialog();
+	diag.Width = 400;
+	diag.Height = 180;
+	diag.Title = "添加用户组";
+	diag.show();
+	load('/TeamWork/Rights/editgroup?id='+id, '#_Container_0', '');
+})
+
+function success(data) {
+	if(data.retcode != 0) {
+		Dialog.alert(data.message);
+     } else {
+		load('/TeamWork/Rights/groups', '#content', '');
+     }
+}
+
+$('.delete').click(function() {
+	var id = $(this).attr('alt');
+	Dialog.confirm('确定要删除该组（删除后该组权限也被删除）？',function(){
+		var type = "POST";
+	    var data = {id:id};
+		var url = "/TeamWork/Rights/deletegroup";
+	    var dataType = "json";
+		ajax(type, data, url, dataType);
+	});
+})
+</script>

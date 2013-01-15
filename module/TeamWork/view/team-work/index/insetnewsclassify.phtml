@@ -1,0 +1,31 @@
+<style>
+#NCName{
+resize: none;
+width: 500px;
+height:30px;
+max-width: 1000px;
+max-height: 1000px;
+}
+
+</style>
+
+<script lang="javascript">
+$(function(){
+	
+$("[name=sub]").click(function(){
+		if($("[name=NCName]").val()==''){
+		 alert("分类名不能为空");
+		 return false
+		}
+	});
+
+})
+</script>
+
+<form action="insetnewsclassify" method="post" name="form" >
+  <h2>新闻分类添加</h2><br/><br/><br/>
+    <h3>新闻分类名：</h3><div>
+      <input type="hidden" name="id" class="id" id="id" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news->id;?>"/>
+	  <input type="text" name="NCName" class="NCName" id="NCName" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news->NCName;?>"/></div>
+      <input type="submit" name="sub" value="提交" />
+</form>

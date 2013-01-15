@@ -1,0 +1,17 @@
+
+<a class="button" href="/TeamWork/Index/insetnewsclassify">分类添加</a>
+<a class="button" href="/TeamWork/Index/looknews">返回</a>
+<table>
+	<?php if(isset($newsclassify)) : foreach($newsclassify as $k=>$v) :?>
+	<tr>
+		<td><?php echo $v->id;?></td>
+		<td><?php echo $v->NCName;?></td>
+		<td>
+			<!-- Icons -->
+			<a href="../index/insetnewsclassify?id=<?=$v->id?>" title="编辑"><img src="/resources/images/icons/pencil.png" alt="Edit" /></a>
+			<a href="../index/deletenewsclassify?id=<?=$v->id?>" title="删除"><img src="/resources/images/icons/cross.png" alt="Delete" /></a> 
+			<!--	 <a href="#" title="Edit Meta"><img src="/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>-->
+		</td>
+</tr>
+<?php  endforeach;endif;?>
+</table>

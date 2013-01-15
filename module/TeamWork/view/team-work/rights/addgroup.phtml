@@ -1,0 +1,32 @@
+<form id="form1">
+  <dl style="margin:20px">
+	<dd style="margin-bottom:10px" title="权限按照此名称分配">　组：<input name="role" /></dd>
+	<dd style="margin-bottom:10px" title="分组可见名称">组名：<input name="name" /></dd>
+  </dl>
+</form>
+<a style="margin:20px" class="button" id="confirm">确定</a>　
+<a class="button" id="back">返回</a>
+<span id="error"></span>
+<script>
+$('#confirm').click(function() {
+	var formdata = $('#form1').serialize();
+	$.ajax({
+		type: "POST",
+	    url: "/TeamWork/Rights/addgroup",
+	    data: formdata,
+	    dataType: "json",
+	    success: function(data) {
+	         if(data.code != 0) {
+				$('#error').html(data.message);
+	         } else {
+				load('/TeamWork/Rights/groups', '#content');
+				Dialog.close();
+	         }
+	    }
+	})
+})
+
+$('#back').click(function() {
+	Dialog.close();
+});
+</script>

@@ -1,0 +1,66 @@
+
+ 			<form id='form1'>
+			<h2>常识添加</h2><br/><br/><br/>
+			常识标题：<div>
+			<input type="hidden" name="Hid" class="Hid" id="Hid" value="<?php if(isset($this->health)&&!empty($this->health))echo $this->health['Hid'];?>"/>
+			<input type="text" name="Htitle" style="width:500" class="Htitle" id="Htitle" value="<?php if(isset($this->health)&&!empty($this->health))echo $this->health['Htitle'];?>"/></div>
+			
+			常识分类：<select name="HCID" id="HCID">
+			<?php foreach ($this->healthclassify as $k=>$v) : ?>
+				<option value='<?=$v['id']?>' <?php if(isset($this->health)&&!empty($this->health)&&($this->health['HCID'] == $v['id'])){ECHO "selected";}?>><?=$v['Hcname']?></option>			
+			<?php endforeach;?>
+			</select>
+			常识内容：
+			<textarea rows="30" cols="50" id="Hcontent" name="Hcontent" ><?php if(isset($this->health)&&!empty($this->health)){echo $this->health['Hcontent'];}?></textarea>
+
+			<a class="button" id="button">提交</a>
+			</form>	  
+
+<script>
+//添加ckeditor编辑器；
+var editor ;   
+if(!CKEDITOR.instances.Hcontent){ 
+                             editor= CKEDITOR.replace("Hcontent");   
+                        }else{   
+                               addCkeditor("Hcontent");   
+                        }  
+function addCkeditor(id){   
+
+	var editor2 = CKEDITOR.instances[id];   
+
+	if(Hcontent) editor2.destroy(true);//销毁编辑器 content2,然后新增一个
+	                            editor = CKEDITOR.replace(id);   
+	                    }   
+
+$('#button').click(function() {
+//	var formdata = $('#form1').serialize();
+	var Hid = $('#Hid').val();
+	var Htitle = $('#Htitle').val();
+	var HCID = $('#HCID').val();
+	var Hcontent = CKEDITOR.instances.Hcontent.getData();
+	var formdata = 'Hid='+ Hid + '&Htitle=' + Htitle + '&HCID=' + HCID + '&Hcontent=' + Hcontent;
+	var url = '/TeamWork/Website/insethealth';
+	$.ajax({
+		type: "post",
+		data: formdata,
+		url: url,
+		dataType: 'json',
+		beforeSend: function(XMLHttpRequest){
+			$('#button').val('正在提交...');
+			$('#button').attr('disabled', 'disabled');
+		},
+		success:function(data){
+			if(data.code == 1) {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/lookhealth');
+			} else {
+				alert(data.message);
+				$('#content').load('/TeamWork/Website/insethealth');
+				//$('#button').val('登录');
+				//$('#button').removeAttr('disabled');
+			}
+		},
+		Error:function(xhr,desc,exceptionobj){}	
+	})
+})
+</script>

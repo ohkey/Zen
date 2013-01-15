@@ -1,0 +1,65 @@
+<style>
+textarea{
+resize: none;
+width: 300px;
+height:200px;
+max-width: 500px;
+max-height: 1000px;
+}
+#Ntitle{
+resize: none;
+width: 500px;
+height:30px;
+max-width: 1000px;
+max-height: 1000px;
+}
+</style>
+ <script type="text/javascript">
+    window.onload = function()
+    {
+        CKEDITOR.replace( 'Ncontent' );
+    };
+    $(function(){
+    	$("[name=sub]").click(function(){
+    		
+    			if($("[name=Ntitle]").val()==''){
+    			 alert("标题不能为空");
+    			 return false
+    			}
+    		
+    		});
+
+    	})
+</script>
+<script type=”text/javascript”>
+var editor = CKEDITOR.replace(‘timu’);
+CKFinder.SetupCKEditor(editor, ‘/editor/ckfinder/’); //ckfinder总目录的相对路径.
+</script>
+		<!-- ckeditor html编译器 -->
+		<script type="text/javascript" src="/editor/ckeditor/ckeditor.js"></script>
+		<script type=”text/javascript” src=”/editor/ckfinder/ckfinder.js”> </script>
+		
+ 			<form action="insetnews" method="post" name="form" >
+			<h2>新闻添加</h2><br/><br/><br/>
+			新闻标题：<div>
+			<input type="hidden" name="Nid" class="Nid" id="Nid" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news->Nid;?>"/>
+			<input type="text" name="Ntitle" class="Ntitle" id="Ntitle" value="<?php if(isset($this->news)&&!empty($this->news))echo $this->news->Ntitle;?>"/></div>
+			
+			新闻分类：<select name="NCID">
+			<?php foreach ($this->newsclassify as $k=>$v) : ?>
+			
+				<option value='<?=$v->id?>' <?php if(isset($this->news)&&!empty($this->news)&&($this->news->NCID==$v->id)){ECHO "selected";}?>><?=$v->NCName?></option>
+				
+			<?php endforeach;?>
+			</select>
+			<ul class="shortcut-buttons-set">
+			
+			</ul><!-- End .shortcut-buttons-set -->
+			
+			<div class="clear"></div> <!-- End .clear -->
+			新闻内容：
+			<textarea rows="30" cols="50" name="Ncontent" id="Ncontent"><?php if(isset($this->news)&&!empty($this->news)){echo $this->news->Ncontent;}?></textarea>
+			<input type="submit" name="sub" value="提交"/><a class="button" href="/TeamWork/Index/looknews">返回</a>
+			</form>	
+
+

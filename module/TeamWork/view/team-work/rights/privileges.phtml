@@ -1,0 +1,72 @@
+<div class="content-box">
+  <div class="content-box-header" style="line-height:45px; padding-left:5px">
+	<h3>分组权限</h3>
+	<div class="clear"></div>
+  </div>
+  <div class="content-box-content">
+	<div class="tab-content default-tab" id="tab1">
+	  <table>
+		<thead>
+		  <tr>
+		    <th>组</th>
+			<th>组名称</th>
+			<th>操作</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <?php 
+			if(!empty($this->allgruops)) : 
+				foreach ($this->allgruops as $k=>$groups) : 
+					if($groups['gp_isdelete']) continue;
+					if($groups['gp_role'] != 'administrator') :
+			?>
+		  <tr>
+			<td><?php echo $groups['gp_role']; ?></td>
+			<td><a href="javascript:void(0);"><?php echo $groups['gp_name'];?></a></td>
+			<td>
+			  <a class="edit" id="<?php echo $groups['gp_role']; ?>" alt="<?php echo $groups['gp_id']; ?>" title="分配权限" href="javascript:void(0);"><img src="/resources/images/icons/pencil.png" title="分配权限" /></a>
+			</td>
+		  </tr>
+		  <?php else : ?>
+		  <tr>
+			<td><?php echo $groups['gp_role']; ?></td>
+			<td><a href="javascript:void(0);"><?php echo $groups['gp_name'];?></a></td>
+			<td></td>
+		  </tr>
+		  <?php endif; endforeach; else: ?>
+		  <tr style="background-color:#ccc"><td colspan=6 style="text-align:center"><b>暂无数据</b></td></tr>
+		  <?php endif;?>
+		</tbody>
+		<?php if(!empty($this->news)) : ?>
+		<tfoot>
+		  <tr>
+			<td colspan="6">
+			  <div class="pagination">
+				<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
+				<a href="#" class="number" title="1">1</a>
+				<a href="#" class="number" title="2">2</a>
+				<a href="#" class="number current" title="3">3</a>
+				<a href="#" class="number" title="4">4</a>
+				<a href="#" title="Next Page">下一个 &raquo;</a><a href="#" title="Last Page">最后 &raquo;</a>
+			  </div> <!-- End .pagination -->
+			  <div class="clear"></div>
+			</td>
+		  </tr>
+		</tfoot>
+		<?php endif;?>
+	  </table>
+    </div>
+  </div>
+</div>
+<script>
+$('.edit').click(function() {
+	var diag = new Dialog();
+	diag.Width = 400;
+	diag.Height = 373;
+	diag.Title = "编辑权限";
+	diag.show();
+	var group = $(this).attr('id');
+	var id = $(this).attr('alt');
+	load('/TeamWork/Rights/groupauthority', '#_Container_0', {group: group, id: id});
+})
+</script>
