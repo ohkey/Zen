@@ -12,8 +12,6 @@ zendfreamwork2
 
 1.请将框架类库与项目放在同一目录,文件结构为
 Zen>common
-   >config
-   >module
 ZF2>library>Zend
 
 2.数据库配置文件在common>config下，根据自己机器情况重新配置
